@@ -36,7 +36,7 @@ variable "security_groups" {
             to_port     = number
             protocol    = string
             cidr_blocks = list(string)
-            security_groups = list(string)
+            security_groups_dependency = list(string)
         }))
         egresses = list(object({
             from_port   = number
