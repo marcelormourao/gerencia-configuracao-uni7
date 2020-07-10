@@ -1,33 +1,27 @@
 resource "aws_subnet" "public_subnet" {
-  for_each = var.public_subnets
-
   vpc_id                  = aws_vpc.tf_vpc.id
-  cidr_block              = each.value.cidr_block
+  cidr_block              = "192.168.10.0/24"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = each.value.subnet_name
+    Name = "Public subnet"
   }
 }
 
 resource "aws_internet_gateway" "igw" {
-  count = length(var.public_subnets) >= 1 ? 1 : 0
-
   vpc_id = aws_vpc.tf_vpc.id
 
   tags = {
-    Name = var.igw_name
+    Name = "Internet Gateway from Terraform"
   }
 }
 
 resource "aws_route_table" "route_table" {
-  count = length(var.public_subnets) >= 1 ? 1 : 0
-
   vpc_id = aws_vpc.tf_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw[0].id
+    gateway_id = aws_internet_gateway.igw.id
   }
 
   tags = {
@@ -36,8 +30,6 @@ resource "aws_route_table" "route_table" {
 }
 
 resource "aws_route_table_association" "rt_association" {
-  for_each = var.public_subnets
-
-  subnet_id      = aws_subnet.public_subnet[each.key].id
-  route_table_id = aws_route_table.route_table[0].id
+  subnet_id      = aws_subnet.public_subnet.id
+  route_table_id = aws_route_table.route_table.id
 }

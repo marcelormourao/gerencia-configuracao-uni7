@@ -5,15 +5,17 @@ resource "aws_key_pair" "terraform_key_pair" {
 
 # Private instance
 resource "aws_instance" "private_instance" {
-  ami = var.ami_id == null ? data.aws_ami.ubuntu18.id : var.ami_id
+  ami = data.aws_ami.ubuntu18.id
   
-  instance_type = var.instance_type
+  instance_type = var.db_instance_type
 
   key_name = "terraform_key"
 
-  subnet_id = module.network.private_subnets["private_sub1"].id
+  subnet_id = aws_subnet.private_subnet.id
 
-  vpc_security_group_ids = [module.network.security_groups["security_group_ssh"].id]
+  vpc_security_group_ids = [aws_security_group.ssh.id, aws_security_group.db.id, aws_security_group.ssh_internal.id]
+
+  iam_instance_profile = aws_iam_instance_profile.s3_profile.name
 
   tags = {
     Name = "DB Instance"
@@ -26,17 +28,19 @@ resource "aws_instance" "private_instance" {
 
 #Public instance
 resource "aws_instance" "public_instance" {
-  ami = var.ami_id == null ? data.aws_ami.ubuntu18.id : var.ami_id
+  ami = data.aws_ami.ubuntu18.id
   
-  instance_type = var.instance_type
+  instance_type = var.app_instance_type
 
   key_name = "terraform_key"
 
-  subnet_id = module.network.public_subnets["public_sub1"].id
+  subnet_id = aws_subnet.public_subnet.id
 
-  vpc_security_group_ids = [module.network.security_groups["security_group_ssh"].id]
+  vpc_security_group_ids = [aws_security_group.ssh.id, aws_security_group.app.id]
 
   associate_public_ip_address = true
+
+  iam_instance_profile = aws_iam_instance_profile.s3_profile.name
 
   tags = {
     Name = "APP Instance"
