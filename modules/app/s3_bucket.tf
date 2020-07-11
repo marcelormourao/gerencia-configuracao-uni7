@@ -16,10 +16,10 @@ resource "aws_s3_bucket_object" "upload" {
 resource "aws_s3_bucket_object" "upload_app" {
   bucket = aws_s3_bucket.ansible_bucket.bucket
   key    = "node_app/node-js-getting-started.zip"
-  source = "node_app/node-js-getting-started.zip"
+  source = var.app_src_dir
   acl = "private"
   tags = {
-      Name = "Node Application"
+      Name = var.project_name
   }
 }
 

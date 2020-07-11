@@ -8,12 +8,15 @@ provider "aws" {
 module "app_node" {
   source = "./modules/app"
 
+  project_name = "app"
+
   db_name = "mourao"
   db_user = "mourao"
   db_password = "mourao"
   db_instance_type  = "t2.micro"
 
   app_instance_type  = "t2.micro"
+  app_src_dir = "node_app/node-js-getting-started.zip"
 }
 
 output "endereco_app" {

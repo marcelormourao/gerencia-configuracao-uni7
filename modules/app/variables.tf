@@ -40,3 +40,13 @@ variable "db_password" {
     type = string
     description = "db_password"
 }
+
+variable "app_src_dir" {
+    type = string
+    description = "path to source code application"
+}
+
+variable "project_name" {
+    type = string
+    description = "Application name"
+}
