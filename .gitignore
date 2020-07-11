@@ -4,3 +4,5 @@
 
 keys/terraform_key
 keys/terraform_key.pub
+
+*.DS_Store
