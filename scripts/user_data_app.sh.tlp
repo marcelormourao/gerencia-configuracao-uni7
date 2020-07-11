@@ -8,4 +8,6 @@ apt-get install -y python ansible unzip awscli postgresql-client
 chmod 400 /home/ubuntu/.ssh/id_rsa
 aws s3 cp s3://ansibleappuni7nodeapp/ansible/ansible.zip ansible.zip
 unzip ansible.zip
-sudo ansible-playbook -vvv -i hosts_app provisioning.yml
+aws s3 cp s3://ansibleappuni7nodeapp/node_app/node-js-getting-started.zip node-js-getting-started.zip
+unzip node-js-getting-started.zip
+sudo ansible-playbook -vvv -i hosts_app provisioning.yml --extra-vars "db_ip=${db_ip}"

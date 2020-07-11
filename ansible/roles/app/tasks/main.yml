@@ -1,3 +1,11 @@
 - name: install node 
   shell: |
     curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && sudo apt-get install -y nodejs
+- name: Install dependencies for Application
+  shell: |
+    cd /tmp/node-js-getting-started && npm install
+- name: Start Application
+  shell: |
+    cd /tmp/node-js-getting-started && npm start
+  environment:
+    DATABASE_URL: postgresql://mourao:mourao@{{ db_ip }}:5432/mourao

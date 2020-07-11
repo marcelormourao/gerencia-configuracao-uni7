@@ -58,7 +58,7 @@ resource "aws_instance" "public_instance" {
     }
   }
 
-  user_data = file("scripts/user_data_app.sh")
+  user_data = templatefile("scripts/user_data_app.sh.tlp", { db_ip = aws_instance.private_instance.private_ip })
 
   depends_on = [aws_key_pair.terraform_key_pair]
 }
