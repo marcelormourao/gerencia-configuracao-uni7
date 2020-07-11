@@ -25,3 +25,18 @@ variable "db_instance_type" {
     type = string
     description = "Instance type of App machine"
 }
+
+variable "db_name" {
+    type = string
+    description = "db_name"
+}
+
+variable "db_user" {
+    type = string
+    description = "db_user"
+}
+
+variable "db_password" {
+    type = string
+    description = "db_password"
+}

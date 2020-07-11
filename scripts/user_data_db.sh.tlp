@@ -8,4 +8,4 @@ apt-get install -y python ansible unzip awscli
 chmod 400 /home/ubuntu/.ssh/id_rsa
 aws s3 cp s3://ansibleappuni7nodeapp/ansible/ansible.zip ansible.zip
 unzip ansible.zip
-sudo ansible-playbook -vvv -i hosts_db provisioning.yml
+sudo ansible-playbook -vvv -i hosts_db provisioning.yml --extra-vars "db_name=${db_name} db_user=${db_user} db_password=${db_password}"

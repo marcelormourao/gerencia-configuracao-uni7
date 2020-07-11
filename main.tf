@@ -8,6 +8,9 @@ provider "aws" {
 module "app_node" {
   source = "./modules/app"
 
+  db_name = "mourao"
+  db_user = "mourao"
+  db_password = "mourao"
   db_instance_type  = "t2.micro"
 
   app_instance_type  = "t2.micro"

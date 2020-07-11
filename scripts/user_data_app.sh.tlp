@@ -10,4 +10,4 @@ aws s3 cp s3://ansibleappuni7nodeapp/ansible/ansible.zip ansible.zip
 unzip ansible.zip
 aws s3 cp s3://ansibleappuni7nodeapp/node_app/node-js-getting-started.zip node-js-getting-started.zip
 unzip node-js-getting-started.zip
-sudo ansible-playbook -vvv -i hosts_app provisioning.yml --extra-vars "db_ip=${db_ip}"
+sudo ansible-playbook -vvv -i hosts_app provisioning.yml --extra-vars "db_ip=${db_ip} db_name=${db_name} db_user=${db_user} db_password=${db_password}"

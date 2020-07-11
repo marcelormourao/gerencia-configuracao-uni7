@@ -8,4 +8,4 @@
   shell: |
     cd /tmp/node-js-getting-started && npm start
   environment:
-    DATABASE_URL: postgresql://mourao:mourao@{{ db_ip }}:5432/mourao
+    DATABASE_URL: postgresql://{{ db_user }}:{{ db_password }}@{{ db_ip }}:5432/{{ db_name }}
