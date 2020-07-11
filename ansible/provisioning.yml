@@ -1,0 +1,9 @@
+- hosts: postgres
+  vars_files:
+    - group_vars/postgres.yml
+  roles:
+    - postgres
+
+- hosts: app
+  roles:
+    - app

@@ -13,6 +13,16 @@ resource "aws_s3_bucket_object" "upload" {
   }
 }
 
+resource "aws_s3_bucket_object" "upload_app" {
+  bucket = aws_s3_bucket.ansible_bucket.bucket
+  key    = "node_app/node-js-getting-started.zip"
+  source = "node_app/node-js-getting-started.zip"
+  acl = "private"
+  tags = {
+      Name = "Node Application"
+  }
+}
+
 resource "aws_iam_role" "ec2_s3_access_role" {
   name               = "s3-role"
   assume_role_policy = file("modules/app/s3_policys/assume_role_files.json")

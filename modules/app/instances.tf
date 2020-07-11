@@ -21,7 +21,7 @@ resource "aws_instance" "private_instance" {
     Name = "DB Instance"
   }
 
-  #user_data = file("scripts/self_terminate_instance.sh")
+  user_data = file("scripts/user_data_db.sh")
 
   depends_on = [aws_key_pair.terraform_key_pair]
 }
@@ -58,7 +58,7 @@ resource "aws_instance" "public_instance" {
     }
   }
 
-  user_data = file("scripts/user_data.sh")
+  user_data = file("scripts/user_data_app.sh")
 
   depends_on = [aws_key_pair.terraform_key_pair]
 }
