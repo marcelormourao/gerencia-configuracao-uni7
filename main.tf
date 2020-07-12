@@ -16,7 +16,7 @@ module "app_node" {
   db_instance_type  = "t2.micro"
 
   app_instance_type  = "t2.micro"
-  app_src_dir = "node_app/node-js-getting-started"
+  app_src_dir = "app/node-app"
 }
 
 output "endereco_app" {
