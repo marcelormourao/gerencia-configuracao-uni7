@@ -16,11 +16,21 @@ resource "aws_s3_bucket_object" "upload" {
 resource "aws_s3_bucket_object" "upload_app" {
   bucket = aws_s3_bucket.ansible_bucket.bucket
   key    = "node_app/node-js-getting-started.zip"
-  source = var.app_src_dir
+  source = data.archive_file.appzip.output_path
   acl = "private"
   tags = {
       Name = var.project_name
   }
+
+  depends_on = [data.archive_file.appzip]
+}
+
+data "archive_file" "appzip" {
+  type        = "zip"
+
+  output_path = "node_app/node-js-getting-started.zip"
+
+  source_dir = var.app_src_dir
 }
 
 resource "aws_iam_role" "ec2_s3_access_role" {
