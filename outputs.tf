@@ -1,7 +1,3 @@
-# output "private_subnets" {
-#   value = module.network.private_subnets
-# }
-
-# output "security_groups" {
-#     value = module.network.security_groups
-# }
+output "public_dns" {
+  value = "http://${aws_instance.public_instance.public_dns}:5000"
+}
