@@ -1,6 +1,19 @@
+resource "null_resource" "generate_keys" {
+  provisioner "local-exec" {
+    command = "rm -rf keys && mkdir keys && ssh-keygen -t rsa -b 4096 -f keys/terraform_key -N ''"
+    interpreter = ["sh"]
+  }
+
+  triggers = {
+    "before" = "${aws_key_pair.terraform_key_pair.id}"
+  }
+}
+
 resource "aws_key_pair" "terraform_key_pair" {
   key_name   = "terraform_key"
   public_key = file("keys/terraform_key.pub")
+
+  #depends_on = [null_resource.generate_keys]
 }
 
 # Private instance
@@ -26,7 +39,7 @@ resource "aws_instance" "private_instance" {
    db_user = var.db_user,
    db_password = var.db_password})
 
-  depends_on = [aws_key_pair.terraform_key_pair]
+  depends_on = [null_resource.generate_keys, aws_key_pair.terraform_key_pair]
 }
 
 #Public instance
@@ -67,6 +80,6 @@ resource "aws_instance" "public_instance" {
      db_user = var.db_user,
      db_password = var.db_password })
 
-  depends_on = [aws_key_pair.terraform_key_pair]
+  depends_on = [null_resource.generate_keys, aws_key_pair.terraform_key_pair]
 }
 
