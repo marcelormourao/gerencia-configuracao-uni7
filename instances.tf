@@ -21,7 +21,7 @@ resource "aws_instance" "private_instance" {
     Name = "DB Instance"
   }
 
-  user_data = templatefile("scripts/user_data_db.sh.tlp", 
+  user_data = templatefile("${path.module}/scripts/user_data_db.sh.tlp", 
   {db_name = var.db_name,
    db_user = var.db_user,
    db_password = var.db_password})
@@ -61,7 +61,7 @@ resource "aws_instance" "public_instance" {
     }
   }
 
-  user_data = templatefile("scripts/user_data_app.sh.tlp",
+  user_data = templatefile("${path.module}/scripts/user_data_app.sh.tlp",
    { db_ip = aws_instance.private_instance.private_ip,
      db_name = var.db_name,
      db_user = var.db_user,

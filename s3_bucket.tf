@@ -35,13 +35,13 @@ data "archive_file" "appzip" {
 
 resource "aws_iam_role" "ec2_s3_access_role" {
   name               = "s3-role"
-  assume_role_policy = file("modules/app/s3_policys/assume_role_files.json")
+  assume_role_policy = file("${path.module}/s3_policys/assume_role_files.json")
 }
 
 resource "aws_iam_policy" "policy" {
   name        = "test-policy"
   description = "A test policy"
-  policy      = file("modules/app/s3_policys/policy.json")
+  policy      = file("${path.module}/s3_policys/policy.json")
 }
 
 resource "aws_iam_policy_attachment" "policy-attach" {
