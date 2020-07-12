@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "ansible_bucket" {
 resource "aws_s3_bucket_object" "upload" {
   bucket = aws_s3_bucket.ansible_bucket.bucket
   key    = "ansible/ansible.zip"
-  source = "ansible/ansible.zip"
+  source = "${path.module}/ansible/ansible.zip"
   acl = "private"
   tags = {
       Name = "Ansible and application scripts"
